@@ -1,9 +1,10 @@
 const { useEffect, useState } = require("react");
 const supabase = require("../utils/supabase");
 
-function Chat() {
+function Chat({ email }) {
   const [messages, setMessages] = useState([]);
   const [content, setContent] = useState("");
+
   let messageMarkup = messages.map(function (message) {
     return (
       <div>
@@ -24,6 +25,8 @@ function Chat() {
       });
   }
 
+  //console.log(user);
+
   useEffect(function () {
     getAllMessages();
     setInterval(function () {
@@ -36,7 +39,7 @@ function Chat() {
     // Save the message to the database
     supabase
       .from("messages")
-      .insert({ content: content, email: "temporary" })
+      .insert({ content: content, email: email })
       .then(function (data) {
         console.log(data);
       });
@@ -55,7 +58,7 @@ function Chat() {
         />
         <input type="submit" value="Send" />
       </form>
-      <h3>All Messages!</h3>
+      <h3>All Messages Goes Here!</h3>
       {messageMarkup}
     </div>
   );

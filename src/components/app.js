@@ -13,6 +13,12 @@ function App() {
   }, []);
   console.log(session);
 
+  function handleLogOut() {
+    supabase.auth.signOut().then(function () {
+      console.log("You are sign out!");
+    });
+  }
+
   let markup = <SignUp />;
   if (session) {
     console.clear();
@@ -22,7 +28,8 @@ function App() {
     markup = (
       <div>
         <h2>You are logged In as {session.user.email}</h2>
-        <Chat />
+        <h3 onClick={handleLogOut}>Log Out</h3>
+        <Chat email={session.user.email} />
       </div>
     );
   }
